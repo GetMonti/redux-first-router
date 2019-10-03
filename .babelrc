@@ -1,36 +1,41 @@
 {
   "presets": [
     "react",
-    ["env", {
-      "targets": {
-        "browsers": ["last 4 versions", "not ie <= 9"]
-      },
-      "modules": false
-    }],
+    [
+      "env",
+      {
+        "modules": false
+      }
+    ],
     "stage-0"
   ],
   "env": {
     "development": {
       "presets": [
         "react",
-        ["env", {
-          "targets": {
-            "node": "current"
+        [
+          "env",
+          {
+            "targets": {
+              "node": "current"
+            }
           }
-        }]
+        ]
       ]
     },
     "test": {
       "presets": [
         "react",
-        ["env", {
-          "targets": {
-            "node": "current"
+        [
+          "env",
+          {
+            "targets": {
+              "node": "current"
+            }
           }
-        }]
+        ]
       ]
     }
   },
   "plugins": ["transform-flow-strip-types"]
 }
-
