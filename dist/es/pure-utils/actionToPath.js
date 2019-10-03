@@ -1,32 +1,24 @@
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 import { compileParamsToPath } from 'rudy-match-path';
+export default ((action, routesMap, serializer) => {
+  const route = routesMap[action.type];
+  const routePath = typeof route === 'object' ? route.path : route;
 
+  const params = _payloadToParams(route, action.payload);
 
-export default (function (action, routesMap, serializer) {
-  var route = routesMap[action.type];
-  var routePath = (typeof route === 'undefined' ? 'undefined' : _typeof(route)) === 'object' ? route.path : route;
-  var params = _payloadToParams(route, action.payload);
-  var path = compileParamsToPath(routePath, params) || '/';
-
-  var query = action.query || action.meta && action.meta.query || action.payload && action.payload.query;
-
-  var search = query && serializer && serializer.stringify(query);
-
-  return search ? path + '?' + search : path;
+  const path = compileParamsToPath(routePath, params) || '/';
+  const query = action.query || action.meta && action.meta.query || action.payload && action.payload.query;
+  const search = query && serializer && serializer.stringify(query);
+  return search ? `${path}?${search}` : path;
 });
 
-var _payloadToParams = function _payloadToParams(route) {
-  var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  return Object.keys(params).reduce(function (sluggifedParams, key) {
-    var segment = params[key];
-    // $FlowFixMe
-    sluggifedParams[key] = transformSegment(segment, route, key);
-    return sluggifedParams;
-  }, {});
-};
+const _payloadToParams = (route, params = {}) => Object.keys(params).reduce((sluggifedParams, key) => {
+  const segment = params[key]; // $FlowFixMe
 
-var transformSegment = function transformSegment(segment, route, key) {
+  sluggifedParams[key] = transformSegment(segment, route, key);
+  return sluggifedParams;
+}, {});
+
+const transformSegment = (segment, route, key) => {
   if (typeof route.toPath === 'function') {
     return route.toPath(segment, key);
   } else if (typeof segment === 'string') {

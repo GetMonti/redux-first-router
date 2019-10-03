@@ -1,8 +1,5 @@
-
 import setKind from '../pure-utils/setKind';
-
-
-export default (function (action, type, payload) {
+export default ((action, type, payload) => {
   action = setKind(action, 'redirect');
 
   if (type) {

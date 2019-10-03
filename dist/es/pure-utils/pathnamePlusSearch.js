@@ -1,15 +1,13 @@
-
-
-export default (function (_ref) {
-  var pathname = _ref.pathname,
-      search = _ref.search;
-
+export default (({
+  pathname,
+  search
+}) => {
   if (search) {
     if (search.indexOf('?') !== 0) {
-      search = '?' + search;
+      search = `?${search}`;
     }
 
-    return '' + pathname + search;
+    return `${pathname}${search}`;
   }
 
   return pathname;

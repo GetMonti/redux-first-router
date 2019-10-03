@@ -1,15 +1,12 @@
-
 import pathToAction from '../pure-utils/pathToAction';
-
 import nestAction from '../pure-utils/nestAction';
-
-export default (function (pathname, routesMap, prevLocation, history, kind, serializer, prevPath, prevLength) {
-  var action = pathToAction(pathname, routesMap, serializer);
+export default ((pathname, routesMap, prevLocation, history, kind, serializer, prevPath, prevLength) => {
+  const action = pathToAction(pathname, routesMap, serializer);
   kind = getKind(!!history.entries, history, kind, prevPath, prevLength);
   return nestAction(pathname, action, prevLocation, history, kind);
 });
 
-var getKind = function getKind(isMemoryHistory, history, kind, prevPath, prevLength) {
+const getKind = (isMemoryHistory, history, kind, prevPath, prevLength) => {
   if (!isMemoryHistory || !prevPath || kind !== 'pop') {
     return kind;
   }
@@ -23,14 +20,13 @@ var getKind = function getKind(isMemoryHistory, history, kind, prevPath, prevLen
   return kind;
 };
 
-var isBack = function isBack(hist, path) {
-  var next = hist.entries[hist.index + 1];
+const isBack = (hist, path) => {
+  const next = hist.entries[hist.index + 1];
   return next && next.pathname === path;
 };
 
-var isNext = function isNext(hist, path, length) {
-  var prev = hist.entries[hist.index - 1];
-  var notPushed = length === hist.length;
-
+const isNext = (hist, path, length) => {
+  const prev = hist.entries[hist.index - 1];
+  const notPushed = length === hist.length;
   return prev && prev.pathname === path && notPushed;
 };

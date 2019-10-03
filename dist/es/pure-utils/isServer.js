@@ -1,3 +1,1 @@
-export default (function () {
-  return typeof window === 'undefined' || !!window.SSRtest;
-});
+export default (() => typeof window === 'undefined' || !!window.SSRtest);

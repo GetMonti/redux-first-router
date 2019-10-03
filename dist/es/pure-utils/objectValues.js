@@ -1,7 +1,1 @@
-
-
-export default (function (routes) {
-  return Object.keys(routes).map(function (key) {
-    return routes[key];
-  });
-});
+export default (routes => Object.keys(routes).map(key => routes[key]));
